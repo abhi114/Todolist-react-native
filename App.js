@@ -1,9 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React,{useState} from 'react';
+import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Task from './components/task';
 
 export default function App() {
+  const [task,setTask] = useState();
+  //array that stores all the task
+  const [taskItems,setTaskItems] = useState([]);
+
+  //function to handle add task
+  const handleAddTask = () => {
+    //dismiss the keyboard
+    Keyboard.dismiss();
+    //console.log(task);
+    //adding the new task with all the previous task
+    setTaskItems([...taskItems,task]);
+    //to empty the input area
+    setTask(null);
+
+  }
+  const 
+
   return (
     <View style={styles.container}>
       {/*todays tasks*/}
@@ -13,8 +30,14 @@ export default function App() {
         {/*the container to contains all the tasks */}
         <View style={styles.items}>
           {/* this is where the tasks will go*/}
-          <Task text ={'Task 1'}/>
-          <Task text = {"Task 2"}/>
+          {/* display the task items, iterate over the taskItems array and display each */}
+          {/* {/* Keys help React identify which items have changed, are added, or are removed. Keys should be given to the elements inside the array to give the elements a stable identity: */}
+          {
+            taskItems.map((item,index) => {
+              return <Task key={index} text={item} />
+            })
+          }
+          
         </View>
       </View>
       
@@ -25,9 +48,9 @@ export default function App() {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style = {styles.writeTaskWrapper}   
       >
-        <TextInput style = {styles.input} placeholder={"Write a task"}/>
+        <TextInput style = {styles.input} placeholder={"Write a task"} value={task} onChangeText={text =>setTask(text)}/>
         {/*as the add button */}
-        <TouchableOpacity >
+        <TouchableOpacity onPress={() => handleAddTask()} >
           <View style={styles.addWrapper}>
             <Text style ={styles.addText}>+</Text>
           </View>
