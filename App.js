@@ -19,7 +19,13 @@ export default function App() {
     setTask(null);
 
   }
-  const 
+  const completeTask = (index) =>{
+    //get the copy of the task and delete the one specified by the index and return the remaining array
+    let itemsCopy = [...taskItems];
+    //index and how many are passed as attributes to splice
+    itemsCopy.splice(index,1);
+    setTaskItems(itemsCopy);
+  }
 
   return (
     <View style={styles.container}>
@@ -34,7 +40,13 @@ export default function App() {
           {/* {/* Keys help React identify which items have changed, are added, or are removed. Keys should be given to the elements inside the array to give the elements a stable identity: */}
           {
             taskItems.map((item,index) => {
-              return <Task key={index} text={item} />
+              return (
+                <TouchableOpacity key={index} onPress={() => completeTask(index)} >
+                 <Task  text={item} />
+
+                </TouchableOpacity>
+              )
+              
             })
           }
           
